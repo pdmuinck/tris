@@ -1,7 +1,6 @@
 package com.pdemuinck;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,22 +11,25 @@ public class GameTest {
     int rows = 4;
     int cols = 4;
     Game game = new Game(4, 4);
-    assertThat(game.getRoster()).hasNumberOfRows(4);
+    assertThat(game.getGrid()).hasNumberOfRows(4);
     for(int r = 0; r < rows; r++){
       for(int j = 0; j < cols; j++){
-        assertThat(game.getRoster()[r][j]).isFalse();
+        assertThat(game.getGrid()[r][j]).isFalse();
       }
     }
   }
 
   @Test
   public void without_user_input_shapes_will_stack_until_upper_bound(){
-    int rows = 10;
-    int cols = 10;
+    int rows = 15;
+    int cols = 6;
     Game game = new Game(rows, cols);
-    game.start(1);
+    while(game.getStatus() > 0){
+      game.startWithShape();
+      game.dropShape(1);
+    }
     for(int r = 0 ; r < rows; r++){
-      assertThat(game.getRoster()[r]).contains(true);
+      assertThat(game.getGrid()[r]).contains(true);
     }
   }
 
